@@ -8,6 +8,7 @@ export const getUserBudgets = async (req, res) => {
         b.amount,
         b.month,
         b.year,
+        c.id AS category_id,
         c.name AS category_name,
         c.type AS category_type
       FROM budgets b
@@ -28,6 +29,16 @@ export const addBudget = async (req, res) => {
   const { category_id, amount, month, year } = req.body;
 
   try {
+    const [category] = await db.execute(
+      `SELECT id FROM categories 
+       WHERE id = ? AND user_id = ? AND is_deleted = FALSE`,
+      [category_id, req.user.id]
+    );
+
+    if (category.length === 0) {
+      return res.status(404).json({ message: 'Category not found' });
+    }
+
     const [result] = await db.execute(
       `INSERT INTO budgets (user_id, category_id, amount, month, year)
        VALUES (?, ?, ?, ?, ?)`,
