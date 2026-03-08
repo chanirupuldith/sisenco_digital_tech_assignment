@@ -103,7 +103,6 @@ const Transactions: React.FC = () => {
     }
   };
 
-
   // Local Search Filtering (Filters by Title)
   const filteredTransactions = transactions.filter(
     (t) =>

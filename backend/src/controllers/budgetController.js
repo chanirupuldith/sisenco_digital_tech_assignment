@@ -3,18 +3,38 @@ import db from '../config/db.js';
 export const getUserBudgets = async (req, res) => {
   try {
     const [rows] = await db.execute(
-      `SELECT 
+      `
+      SELECT 
         b.id,
         b.amount,
         b.month,
         b.year,
         c.id AS category_id,
         c.name AS category_name,
-        c.type AS category_type
+        c.type AS category_type,
+
+        COALESCE(SUM(t.amount), 0) AS current_spent
+
       FROM budgets b
-      JOIN categories c ON b.category_id = c.id
+
+      JOIN categories c 
+        ON b.category_id = c.id
+
+      LEFT JOIN transactions t 
+        ON t.category_id = b.category_id
+        AND t.user_id = b.user_id
+        AND t.type = 'expense'
+        AND t.is_deleted = FALSE
+        AND MONTH(t.date) = b.month
+        AND YEAR(t.date) = b.year
+
       WHERE b.user_id = ?
-      ORDER BY b.year DESC, b.month DESC`,
+      AND c.is_deleted = FALSE
+
+      GROUP BY b.id
+
+      ORDER BY b.year DESC, b.month DESC
+      `,
       [req.user.id]
     );
 
