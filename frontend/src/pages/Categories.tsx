@@ -23,7 +23,7 @@ const Categories: React.FC = () => {
   const fetchCategories = async () => {
     try {
       setIsLoading(true);
-      const data = await categoryApi.getAll();
+      const data = await categoryApi.getCategories();
       setCategories(data);
     } catch (error) {
       toast.error('Failed to load categories. Please check your connection.');

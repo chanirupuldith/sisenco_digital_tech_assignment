@@ -5,7 +5,6 @@ import {
   Wallet,
   PieChart,
   ArrowUpRight,
-  Settings,
   LogOut,
   PlusCircle,
   Tag,
@@ -39,7 +38,6 @@ const Sidebar: React.FC = () => {
     },
     { name: 'Budgets', icon: <PieChart size={20} />, path: '/budgets' },
     { name: 'Categories', icon: <Tag size={20} />, path: '/categories' },
-    { name: 'Settings', icon: <Settings size={20} />, path: '/settings' },
   ];
 
   return (
@@ -123,14 +121,14 @@ const Sidebar: React.FC = () => {
 
         <div className="p-4 border-t border-slate-300">
           <div className="flex items-center gap-3 p-2 mb-3">
-            <div className="w-9 h-9 rounded-full bg-blue-100 flex items-center justify-center text-blue-700 font-bold border border-blue-200 shrink-0">
+            <div className="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center text-blue-700 font-bold border border-blue-200 shrink-0">
               {auth?.user.username.charAt(0).toUpperCase()}
             </div>
             <div className="overflow-hidden">
               <p className="text-xs font-bold text-slate-900 truncate">
                 {auth?.user.username}
               </p>
-              <p className="text-[10px] text-slate-400 truncate">
+              <p className="text-[11px] text-slate-500 truncate">
                 {auth?.user.email}
               </p>
             </div>

@@ -13,7 +13,7 @@ const getAuthHeaders = () => {
 };
 
 export const categoryApi = {
-  getAll: async (): Promise<Category[]> => {
+  getCategories: async (): Promise<Category[]> => {
     const response = await api.get('/categories', getAuthHeaders());
     return response.data;
   },

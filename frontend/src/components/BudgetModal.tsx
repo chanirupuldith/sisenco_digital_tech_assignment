@@ -61,7 +61,7 @@ const BudgetModal: React.FC<Props> = ({
 
   const fetchCategories = async () => {
     try {
-      const data = await categoryApi.getAll();
+      const data = await categoryApi.getCategories();
       setCategories(data);
     } catch (error) {
       toast.error('Failed to load categories');
