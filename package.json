@@ -1,0 +1,10 @@
+{
+  "name": "sisenco-tech-assignment",
+  "version": "1.0.0",
+  "devDependencies": {
+    "prettier": "3.x.x"
+  },
+  "scripts": {
+    "format": "prettier --write ."
+  }
+}
