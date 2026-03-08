@@ -5,7 +5,7 @@ import { toast } from 'sonner';
 
 const Auth: React.FC = () => {
     const [isLogin, setIsLogin] = useState(true);
-    const [showPassword, setShowPassword] = useState(false); // Password Toggle State
+    const [showPassword, setShowPassword] = useState(false);
     const [formData, setFormData] = useState({ username: '', email: '', password: '' });
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
@@ -15,12 +15,11 @@ const Auth: React.FC = () => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
 
-    // Resets form and switches mode
     const toggleMode = () => {
         setIsLogin(!isLogin);
-        setFormData({ username: '', email: '', password: '' }); // Reset fields
+        setFormData({ username: '', email: '', password: '' });
         setError('');
-        setShowPassword(false); // Hide password by default on switch
+        setShowPassword(false);
     };
 
     const handleSubmit = async (e: React.FormEvent) => {
@@ -49,7 +48,7 @@ const Auth: React.FC = () => {
                 errorMsg = responseData.message;
             }
 
-            toast.error(errorMsg); // This pops up the red toast
+            toast.error(errorMsg);
         } finally {
             setLoading(false);
         }
@@ -118,7 +117,7 @@ const Auth: React.FC = () => {
                                 placeholder="Enter your password"
                                 onChange={handleInputChange}
                             />
-                            {/* Visibility Toggle Button */}
+                            
                             <button
                                 type="button"
                                 onClick={() => setShowPassword(!showPassword)}
