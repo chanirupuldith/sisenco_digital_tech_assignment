@@ -1,4 +1,9 @@
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from 'react-router-dom';
 import Auth from './pages/Auth';
 import ProtectedRoute from './components/ProtectedRoute';
 import DashboardLayout from './components/DashboardLayout'; // We'll create this below
@@ -18,27 +23,32 @@ function App() {
           <Route
             path="/"
             element={
-              isAuthenticated ?
-                <Navigate to="/dashboard" replace /> :
+              isAuthenticated ? (
+                <Navigate to="/dashboard" replace />
+              ) : (
                 <Navigate to="/login" replace />
+              )
             }
           />
 
           <Route
             path="/login"
-            element={isAuthenticated ? <Navigate to="/dashboard" replace /> : <Auth />}
+            element={
+              isAuthenticated ? <Navigate to="/dashboard" replace /> : <Auth />
+            }
           />
 
           <Route element={<ProtectedRoute />}>
-
             <Route element={<DashboardLayout />}>
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/stages" element={<div>Stages Management</div>} />
-              <Route path="/transactions" element={<div>Transactions View</div>} />
+              <Route
+                path="/transactions"
+                element={<div>Transactions View</div>}
+              />
               <Route path="/budgets" element={<div>Budgets View</div>} />
               <Route path="/settings" element={<div>Settings View</div>} />
             </Route>
-
           </Route>
 
           <Route path="*" element={<Navigate to="/" replace />} />
