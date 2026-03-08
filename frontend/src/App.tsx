@@ -10,6 +10,7 @@ import DashboardLayout from './components/DashboardLayout'; // We'll create this
 import Dashboard from './pages/Dashboard'; // We'll create this below
 import { getStoredUser } from './services/authService';
 import { Toaster } from 'sonner';
+import Categories from './pages/Categories';
 
 function App() {
   const auth = getStoredUser();
@@ -41,7 +42,7 @@ function App() {
           <Route element={<ProtectedRoute />}>
             <Route element={<DashboardLayout />}>
               <Route path="/dashboard" element={<Dashboard />} />
-              <Route path="/stages" element={<div>Stages Management</div>} />
+              <Route path="/categories" element={<Categories />} />
               <Route
                 path="/transactions"
                 element={<div>Transactions View</div>}
