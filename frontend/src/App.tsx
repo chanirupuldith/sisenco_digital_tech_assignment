@@ -1,57 +1,65 @@
-import { useEffect, useState } from 'react';
-import axios from 'axios';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import Auth from './pages/Auth';
+import ProtectedRoute from './components/ProtectedRoute';
+import { getStoredUser } from './services/authService';
+import { Toaster } from 'sonner';
 
 function App() {
-  const [dbStatus, setDbStatus] = useState<string>('Connecting...');
-  const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    // Calling the health check endpoint we created in the backend
-    axios
-      .get('http://localhost:5000/api/health')
-      .then((res) => {
-        setDbStatus(res.data.message);
-      })
-      .catch((err) => {
-        setError(
-          'Could not connect to backend. Check CORS or if server is running.'
-        );
-        console.error(err);
-      });
-  }, []);
+  const auth = getStoredUser();
+  const isAuthenticated = !!auth?.token;
 
   return (
-    <div className="min-h-screen bg-slate-900 flex items-center justify-center p-4">
-      <div className="max-w-md w-full bg-slate-800 rounded-xl shadow-2xl p-8 border border-slate-700">
-        <h1 className="text-2xl font-bold text-white mb-6 text-center">
-          System Initialization Test
-        </h1>
+    <>
+      <Toaster position="top-right" richColors closeButton />
+      <Router>
+        <Routes>
+          {/* Root Path Logic:
+          If logged in -> Dashboard
+          If NOT logged in -> Auth (Login/Register)
+        */}
+          <Route
+            path="/"
+            element={
+              isAuthenticated ?
+                <Navigate to="/dashboard" replace /> :
+                <Navigate to="/login" replace />
+            }
+          />
 
-        <div className="space-y-4">
-          <div className="flex items-center justify-between p-4 bg-slate-700 rounded-lg">
-            <span className="text-slate-300 font-medium">Tailwind CSS:</span>
-            <span className="text-green-400 font-bold">Active</span>
-          </div>
+          {/* Auth Page */}
+          <Route
+            path="/login"
+            element={isAuthenticated ? <Navigate to="/dashboard" replace /> : <Auth />}
+          />
 
-          <div className="flex flex-col p-4 bg-slate-700 rounded-lg">
-            <span className="text-slate-300 font-medium mb-1">
-              Database Status:
-            </span>
-            {error ? (
-              <span className="text-red-400 text-sm">{error}</span>
-            ) : (
-              <span className="text-blue-400 font-mono text-sm">
-                {dbStatus}
-              </span>
-            )}
-          </div>
-        </div>
+          {/* Protected Routes */}
+          <Route element={<ProtectedRoute />}>
+            <Route
+              path="/dashboard"
+              element={
+                <div className="p-10 bg-slate-50 min-h-screen">
+                  <h1 className="text-3xl font-bold text-slate-900">
+                    Welcome, {auth?.user.username}!
+                  </h1>
+                  <p className="text-slate-500 mt-2">Your ERP Dashboard is ready.</p>
 
-        <p className="mt-6 text-center text-slate-500 text-xs">
-          If both are green/blue, initialization is complete.
-        </p>
-      </div>
-    </div>
+                  {/* Temporary Logout for testing */}
+                  <button
+                    onClick={() => { localStorage.removeItem('user'); window.location.reload(); }}
+                    className="mt-6 px-4 py-2 bg-rose-600 text-white rounded-lg hover:bg-rose-700 transition"
+                  >
+                    Sign Out
+                  </button>
+                </div>
+              }
+            />
+          </Route>
+
+          {/* Catch-all: Send everything back to root */}
+          <Route path="*" element={<Navigate to="/" replace />} />
+        </Routes>
+      </Router>
+    </>
   );
 }
 
