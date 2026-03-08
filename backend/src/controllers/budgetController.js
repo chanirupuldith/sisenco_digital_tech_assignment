@@ -1,0 +1,77 @@
+import db from '../config/db.js';
+
+export const getUserBudgets = async (req, res) => {
+  try {
+    const [rows] = await db.execute(
+      `SELECT 
+        b.id,
+        b.amount,
+        b.month,
+        b.year,
+        c.name AS category_name,
+        c.type AS category_type
+      FROM budgets b
+      JOIN categories c ON b.category_id = c.id
+      WHERE b.user_id = ?
+      ORDER BY b.year DESC, b.month DESC`,
+      [req.user.id]
+    );
+
+    res.json(rows);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Failed to fetch budgets' });
+  }
+};
+
+export const addBudget = async (req, res) => {
+  const { category_id, amount, month, year } = req.body;
+
+  try {
+    const [result] = await db.execute(
+      `INSERT INTO budgets (user_id, category_id, amount, month, year)
+       VALUES (?, ?, ?, ?, ?)`,
+      [req.user.id, category_id, amount, month, year]
+    );
+
+    res.status(201).json({
+      id: result.insertId,
+      category_id,
+      amount,
+      month,
+      year,
+    });
+  } catch (error) {
+    if (error.code === 'ER_DUP_ENTRY') {
+      return res.status(400).json({
+        message: 'Budget already exists for this category and month',
+      });
+    }
+
+    console.error(error);
+    res.status(500).json({ error: 'Failed to create budget' });
+  }
+};
+
+export const updateBudget = async (req, res) => {
+  const { id } = req.params;
+  const { amount } = req.body;
+
+  try {
+    const [result] = await db.execute(
+      `UPDATE budgets
+       SET amount = ?
+       WHERE id = ? AND user_id = ?`,
+      [amount, id, req.user.id]
+    );
+
+    if (result.affectedRows === 0) {
+      return res.status(404).json({ message: 'Budget not found' });
+    }
+
+    res.json({ message: 'Budget updated successfully' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Budget update failed' });
+  }
+};
