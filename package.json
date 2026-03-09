@@ -1,0 +1,13 @@
+{
+  "name": "sisenco-tech-assignment",
+  "version": "1.0.0",
+  "devDependencies": {
+    "prettier": "3.x.x"
+  },
+  "scripts": {
+    "format": "prettier --write ."
+  },
+  "dependencies": {
+    "lucide-react": "^0.577.0"
+  }
+}
