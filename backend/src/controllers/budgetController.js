@@ -1,5 +1,12 @@
 import db from '../config/db.js';
 
+/**
+ * Retrieves all budgets for the authenticated user.
+ * Includes the actual amount spent per budget category for the given month/year.
+ *
+ * @route  GET /api/budgets
+ * @access Private
+ */
 export const getUserBudgets = async (req, res) => {
   try {
     const [rows] = await db.execute(
@@ -45,6 +52,13 @@ export const getUserBudgets = async (req, res) => {
   }
 };
 
+/**
+ * Creates a new monthly budget for a specific category.
+ * Returns 400 if a budget already exists for that category and month.
+ *
+ * @route  POST /api/budgets
+ * @access Private
+ */
 export const addBudget = async (req, res) => {
   const { category_id, amount, month, year } = req.body;
 
@@ -84,6 +98,12 @@ export const addBudget = async (req, res) => {
   }
 };
 
+/**
+ * Updates the amount of an existing budget by ID.
+ *
+ * @route  PUT /api/budgets/:id
+ * @access Private
+ */
 export const updateBudget = async (req, res) => {
   const { id } = req.params;
   const { amount } = req.body;

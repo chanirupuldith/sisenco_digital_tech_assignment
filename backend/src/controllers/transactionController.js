@@ -1,5 +1,12 @@
 import db from '../config/db.js';
 
+/**
+ * Retrieves all transactions for the authenticated user.
+ * Supports optional query filters: type, category, startDate, endDate.
+ *
+ * @route  GET /api/transactions
+ * @access Private
+ */
 export const getUserTransactions = async (req, res) => {
   try {
     const { startDate, endDate, type, category } = req.query;
@@ -53,6 +60,12 @@ export const getUserTransactions = async (req, res) => {
   }
 };
 
+/**
+ * Creates a new transaction for the authenticated user.
+ *
+ * @route  POST /api/transactions
+ * @access Private
+ */
 export const addTransaction = async (req, res) => {
   const { title, amount, category_id, type, date, note } = req.body;
 
@@ -79,6 +92,12 @@ export const addTransaction = async (req, res) => {
   }
 };
 
+/**
+ * Updates an existing transaction by ID for the authenticated user.
+ *
+ * @route  PUT /api/transactions/:id
+ * @access Private
+ */
 export const updateTransaction = async (req, res) => {
   const { id } = req.params;
   const { title, amount, category_id, type, date, note } = req.body;
@@ -102,6 +121,13 @@ export const updateTransaction = async (req, res) => {
   }
 };
 
+/**
+ * Soft-deletes a transaction by ID for the authenticated user.
+ * Sets `is_deleted = TRUE` rather than removing the record.
+ *
+ * @route  DELETE /api/transactions/:id
+ * @access Private
+ */
 export const deleteTransaction = async (req, res) => {
   const { id } = req.params;
 

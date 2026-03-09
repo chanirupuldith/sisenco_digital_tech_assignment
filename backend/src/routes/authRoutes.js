@@ -4,6 +4,9 @@ import { register, login } from '../controllers/authController.js';
 
 const router = Router();
 
+/**
+ * Validates request fields and returns 400 with errors if any validation fails.
+ */
 const validate = (req, res, next) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
@@ -12,6 +15,11 @@ const validate = (req, res, next) => {
   next();
 };
 
+/**
+ * @route  POST /api/auth/register
+ * @desc   Register a new user account
+ * @access Public
+ */
 router.post(
   '/register',
   [
@@ -28,6 +36,11 @@ router.post(
   register
 );
 
+/**
+ * @route  POST /api/auth/login
+ * @desc   Authenticate user and return a JWT token
+ * @access Public
+ */
 router.post(
   '/login',
   [

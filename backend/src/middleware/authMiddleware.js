@@ -1,5 +1,12 @@
 import jwt from 'jsonwebtoken';
 
+/**
+ * Middleware to protect private routes.
+ *
+ * Verifies the JWT token sent in the `Authorization: Bearer <token>` header.
+ * If valid, attaches the decoded user payload to `req.user` and calls `next()`.
+ * Returns 401 if the token is missing or invalid.
+ */
 const protect = async (req, res, next) => {
   let token;
 

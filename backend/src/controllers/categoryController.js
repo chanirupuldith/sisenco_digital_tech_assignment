@@ -1,5 +1,11 @@
 import db from '../config/db.js';
 
+/**
+ * Retrieves all active categories for the authenticated user.
+ *
+ * @route  GET /api/categories
+ * @access Private
+ */
 export const getUserCategories = async (req, res) => {
   try {
     const [rows] = await db.execute(
@@ -12,6 +18,12 @@ export const getUserCategories = async (req, res) => {
   }
 };
 
+/**
+ * Creates a new category for the authenticated user.
+ *
+ * @route  POST /api/categories
+ * @access Private
+ */
 export const addCategory = async (req, res) => {
   const { name, type } = req.body;
   try {
@@ -25,6 +37,12 @@ export const addCategory = async (req, res) => {
   }
 };
 
+/**
+ * Updates an existing category by ID for the authenticated user.
+ *
+ * @route  PUT /api/categories/:id
+ * @access Private
+ */
 export const updateCategory = async (req, res) => {
   const { id } = req.params;
   const { name, type } = req.body;
@@ -44,6 +62,13 @@ export const updateCategory = async (req, res) => {
   }
 };
 
+/**
+ * Soft-deletes a category by ID for the authenticated user.
+ * Sets `is_deleted = TRUE` rather than removing the record.
+ *
+ * @route  DELETE /api/categories/:id
+ * @access Private
+ */
 export const deleteCategory = async (req, res) => {
   const { id } = req.params;
   try {

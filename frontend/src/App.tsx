@@ -6,14 +6,22 @@ import {
 } from 'react-router-dom';
 import Auth from './pages/Auth';
 import ProtectedRoute from './components/ProtectedRoute';
-import DashboardLayout from './components/DashboardLayout'; // We'll create this below
-import Dashboard from './pages/Dashboard'; // We'll create this below
+import DashboardLayout from './components/DashboardLayout';
+import Dashboard from './pages/Dashboard';
 import { getStoredUser } from './services/authService';
 import { Toaster } from 'sonner';
 import Categories from './pages/Categories';
 import Budgets from './pages/Budgets';
 import Transactions from './pages/Transactions';
 
+/**
+ * Root application component.
+ *
+ * Sets up client-side routing using React Router:
+ * - Unauthenticated users are redirected to `/login`.
+ * - Authenticated users are redirected to `/dashboard`.
+ * - Private pages are wrapped by `ProtectedRoute` and `DashboardLayout`.
+ */
 function App() {
   const auth = getStoredUser();
   const isAuthenticated = !!auth?.token;

@@ -1,5 +1,17 @@
 import db from '../config/db.js';
 
+/**
+ * Returns aggregated dashboard data for the authenticated user.
+ *
+ * Response includes:
+ * - Financial summary: total income, total expenses, current balance, and budget usage.
+ * - Visual insights: expense breakdown by category, monthly income vs expenses (last 6 months),
+ *   and budget vs actual spending for the current month.
+ * - Recent transactions: the 5 most recent transactions.
+ *
+ * @route  GET /api/dashboard
+ * @access Private
+ */
 export const getDashboardData = async (req, res) => {
   try {
     const userId = req.user.id;

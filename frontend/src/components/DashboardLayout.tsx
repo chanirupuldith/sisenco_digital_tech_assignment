@@ -2,6 +2,12 @@ import React from 'react';
 import { Outlet } from 'react-router-dom';
 import Sidebar from './Sidebar';
 
+/**
+ * Shared layout wrapper for all authenticated pages.
+ *
+ * Renders the `Sidebar` navigation alongside the active page content.
+ * Child route components are injected via `<Outlet />`.
+ */
 const DashboardLayout: React.FC = () => {
   return (
     <div className="flex min-h-screen bg-[#f8fafc]">

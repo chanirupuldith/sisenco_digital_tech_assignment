@@ -12,6 +12,9 @@ import authMiddleware from '../middleware/authMiddleware.js';
 
 const router = Router();
 
+/**
+ * Validates request fields and returns 400 with errors if any validation fails.
+ */
 const validate = (req, res, next) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
@@ -22,8 +25,10 @@ const validate = (req, res, next) => {
 
 router.use(authMiddleware);
 
+/** @route GET    /api/transactions     - Get all transactions (filterable by type, category, date) */
 router.get('/', getUserTransactions);
 
+/** @route POST   /api/transactions     - Create a new transaction */
 router.post(
   '/',
   [
@@ -39,6 +44,7 @@ router.post(
   addTransaction
 );
 
+/** @route PUT    /api/transactions/:id - Update an existing transaction */
 router.put(
   '/:id',
   [
@@ -52,6 +58,7 @@ router.put(
   updateTransaction
 );
 
+/** @route DELETE /api/transactions/:id - Soft-delete a transaction */
 router.delete('/:id', deleteTransaction);
 
 export default router;

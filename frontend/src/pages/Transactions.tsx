@@ -15,6 +15,17 @@ import TransactionModal from '../components/TransactionModal';
 import { toast } from 'sonner';
 import ConfirmModal from '../components/ConfirmationModal';
 
+/**
+ * Transactions page component.
+ *
+ * Displays a filterable and searchable list of the user's income and expense records.
+ * Supports creating, editing, and soft-deleting transactions via modals.
+ *
+ * Features:
+ * - Search by title or note (client-side)
+ * - Filter by date range, type, and category (server-side)
+ * - Inline edit and delete with confirmation dialog
+ */
 const Transactions: React.FC = () => {
   const [transactions, setTransactions] = useState<Transaction[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);

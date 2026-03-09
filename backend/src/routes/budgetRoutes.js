@@ -11,6 +11,9 @@ import authMiddleware from '../middleware/authMiddleware.js';
 
 const router = Router();
 
+/**
+ * Validates request fields and returns 400 with errors if any validation fails.
+ */
 const validate = (req, res, next) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
@@ -21,8 +24,10 @@ const validate = (req, res, next) => {
 
 router.use(authMiddleware);
 
+/** @route GET  /api/budgets     - Get all user budgets with current spending */
 router.get('/', getUserBudgets);
 
+/** @route POST /api/budgets     - Create a new monthly budget */
 router.post(
   '/',
   [
@@ -35,6 +40,7 @@ router.post(
   addBudget
 );
 
+/** @route PUT  /api/budgets/:id - Update an existing budget amount */
 router.put(
   '/:id',
   [body('amount').isFloat({ gt: 0 }).withMessage('Amount must be positive')],

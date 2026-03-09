@@ -14,14 +14,17 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// Auth
+/**
+ * API Routes
+ * All routes are prefixed with /api
+ */
 app.use('/api/auth', authRoutes);
 app.use('/api/categories', categoryRoutes);
 app.use('/api/budgets', budgetRoutes);
 app.use('/api/transactions', transactionRoutes);
 app.use('/api/dashboard', dashboardRoutes);
 
-// Check Health
+/** @route GET /api/health - Health check endpoint */
 app.get('/api/health', (req, res) => {
   res.json({ status: 'success', message: 'Backend is live!' });
 });

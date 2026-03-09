@@ -2,6 +2,13 @@ import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import db from '../config/db.js';
 
+/**
+ * Registers a new user.
+ * Hashes the password and stores user credentials in the database.
+ *
+ * @route  POST /api/auth/register
+ * @access Public
+ */
 export const register = async (req, res) => {
   const { username, email, password } = req.body;
 
@@ -29,6 +36,13 @@ export const register = async (req, res) => {
   }
 };
 
+/**
+ * Authenticates a user and returns a signed JWT token.
+ * Compares the provided password against the stored hash.
+ *
+ * @route  POST /api/auth/login
+ * @access Public
+ */
 export const login = async (req, res) => {
   const { email, password } = req.body;
 
