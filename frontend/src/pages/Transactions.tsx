@@ -6,7 +6,6 @@ import {
   Trash2,
   ArrowUpRight,
   ArrowDownLeft,
-  Filter,
 } from 'lucide-react';
 import { transactionApi } from '../services/transactionService';
 import { categoryApi } from '../services/categoryService';

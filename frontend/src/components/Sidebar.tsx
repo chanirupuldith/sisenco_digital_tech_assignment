@@ -6,10 +6,9 @@ import {
   PieChart,
   ArrowUpRight,
   LogOut,
-  PlusCircle,
   Tag,
-  Menu, // Added for mobile toggle
-  X, // Added for mobile close
+  Menu,
+  X,
 } from 'lucide-react';
 import { logout, getStoredUser } from '../services/authService';
 import { toast } from 'sonner';
@@ -42,7 +41,6 @@ const Sidebar: React.FC = () => {
 
   return (
     <>
-      {/* --- MOBILE OVERLAY --- */}
       {isMobileMenuOpen && (
         <div
           className="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-40 lg:hidden"
@@ -50,7 +48,6 @@ const Sidebar: React.FC = () => {
         />
       )}
 
-      {/* --- MOBILE TOP BAR --- */}
       <div className="lg:hidden fixed top-0 left-0 right-0 h-16 bg-white border-b border-slate-200 flex items-center justify-between px-4 z-30">
         <div className="flex items-center gap-2">
           <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center text-white">
@@ -66,7 +63,6 @@ const Sidebar: React.FC = () => {
         </button>
       </div>
 
-      {/* --- SIDEBAR --- */}
       <aside
         className={`
         fixed inset-y-0 left-0 z-50 w-64 bg-slate-200 border-r border-slate-300 flex flex-col transition-transform duration-300 transform
@@ -74,7 +70,6 @@ const Sidebar: React.FC = () => {
         ${isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full'}
       `}
       >
-        {/* Close Button (Mobile Only) */}
         <button
           onClick={() => setIsMobileMenuOpen(false)}
           className="lg:hidden absolute top-4 right-4 p-2 text-slate-500"
@@ -89,13 +84,6 @@ const Sidebar: React.FC = () => {
           <span className="text-xl font-extrabold text-slate-900 tracking-tight">
             FinTrack
           </span>
-        </div>
-
-        <div className="px-4 mb-4">
-          <button className="w-full flex items-center justify-center gap-2 bg-slate-900 hover:bg-slate-800 text-white py-3 rounded-xl transition-all active:scale-[0.98] shadow-md font-semibold text-sm">
-            <PlusCircle size={18} />
-            Add Transaction
-          </button>
         </div>
 
         <nav className="flex-1 px-4 space-y-1">
